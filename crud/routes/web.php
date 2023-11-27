@@ -7,4 +7,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/urunler', [ProductController::class, 'index']);
+// Gruplama
+Route::prefix('urunler')->group(function () {
+    Route::get('/', [ProductController::class, 'list']);
+    Route::get('/ekle', [ProductController::class, 'create']);
+    Route::post('/ekle', [ProductController::class, 'store']);
+});

@@ -7,10 +7,33 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function list()
     {
         $products = Product::get()->where('isPublish', 1);
 
-        return view('products.index', compact('products'));
+        return view('products.list', compact('products'));
+    }
+
+    public function create()
+    {
+        return view('products.create');
+    }
+
+    public function store(Request $request)
+    {
+        // Formdaki name'lere göre verileri çektik
+
+        // gönderilen verileri test etme
+        // dd($request->all());
+
+        $product = new Product();
+        $product->name = $request->get('name');
+        $product->description = $request->get('description');
+        $product->price = $request->get('price');
+        $product->qty = $request->get('qty');
+        $product->isPublish = $request->boolean('isPublish');
+        $product->save();
+
+        return redirect()->back();
     }
 }
