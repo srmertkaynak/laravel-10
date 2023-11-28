@@ -1,0 +1,64 @@
+Laravel yol haritası:
+
+1- Önce veritabanına örnek tabloları gönder:
+php artisan migrate
+
+2- Sonra kendi tablolarını açmak için açmak istediğin tablo adını yaz:
+php artisan make:migration create_flights_table (flights isimli bir tablo oluşturdum)
+
+3- Ardından database / migrations kısmına gidip ilgili oluşan migration dosyasını aç. Ekleme yapmak istediğin alanları public function up fonksiyonunun içerisine yaz:
+$table->id();
+$table->string('from');
+$table->string('to');
+$table->integer('passengerCount');
+$table->double('price');
+$table->string('pilot')->nullable(); // nullable boş bırakılabilir demek.
+$table->timestamps();
+
+4- php artisan migrate komutu ile oluşturduğum tabloyu veritabanına kayıt ettim.
+
+5- Eğer ilgili migrationu geri almak istersek:
+php artisan migrate:rollback
+
+Bu değişiklikleri storage/logs/laravel.log bölümünden görmek için info() alanı oluşturup kontrol edebiliriz.
+
+6- Var olan veritabanına yeni bir alan eklemek istersek:
+php artisan make:migration add_priority_to_flights_table
+(priority alanını flights tablosuna ekledik)
+
+Ardından oluşan migrationa gidip up() fonksiyonuna ilgili alanın tanımını yazıyoruz:
+$table->integer('priority')->default(0);
+
+sonra down() fonksiyonuna ise rollback yapacağımızda oluşan senaryoyu yazıyoruz:
+$table->dropColumn('priority');
+
+tüm bu işlemlerden sonra tabloya ilgili alanı göndermek için:
+php artisan migrate
+
+----------------
+
+Örnek İpuçları:
+
+1- Laravel sunucu saatini değiştirmek için:
+config / app.php'deki 'timezone' => 'UTC' alanını 'timezone' => 'Europe/Istanbul' yapmak gerekiyor.
+
+2- Tabloda oluşturulan bir alana varsayılan olarak null değeri vermek istersek:
+$table->string('pilot')->nullable(); // alanı null yap
+
+3- Tabloda oluşturulan bir alana varsayılan değer vermek istersek:
+$table->integer('priority')->default(0); // Varsayılan 0 verdik
+
+4- Tabloya sonradan bir alan eklenecekse ve bu alanı belli bir sütundan sonra eklemek istiyorsak:
+$table->integer('priority')->default(0)->after('pilot'); // after: pilot sütununun devamına ekle
+
+5- Tabloya daha önce string olarak eklenmiş bir alanın tipini string olarak değiştirme:
+önce ilgili migration'u oluşturuyoruz.
+php artisan make:migration change_priority_column_to_flights_table
+
+Oluşan migration'a gidip, up() fonksiyonuna şu kodu yazıyoruz:
+$table->string('priority', 20)->change(); // maximum 20 karakter olsun sınırlaması getirdik
+
+down() fonksiyonuna da şu kodu yazıyoruz:
+$table->integer('priority')->change();
+(migrate:rollback yaptığımızda tekrar eski hali olan integera çevirmek için)
+
