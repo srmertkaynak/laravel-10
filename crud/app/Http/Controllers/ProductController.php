@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function list()
     {
-        $products = Product::get()->where('isPublish', 1);
+        $products = Product::get()->where('isPublish', 1); // select * from products where isPublish = 1 and deleted_at is NOT NULL
 
         return view('products.list', compact('products'));
     }
@@ -57,6 +57,14 @@ class ProductController extends Controller
         $product->qty = $request->get('qty');
         $product->isPublish = $request->boolean('isPublish');
         $product->save();
+
+        return redirect()->back();
+    }
+
+    public function delete($id)
+    {
+        $product = Product::find($id);
+        $product->delete();
 
         return redirect()->back();
     }

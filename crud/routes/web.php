@@ -14,4 +14,5 @@ Route::prefix('urunler')->group(function () {
     Route::post('/ekle', [ProductController::class, 'store']);
     Route::get('/duzenle/{id}', [ProductController::class, 'edit']);
     Route::post('/duzenle/{id}', [ProductController::class, 'update']);
+    Route::get('/sil/{id}', [ProductController::class, 'delete']);
 });

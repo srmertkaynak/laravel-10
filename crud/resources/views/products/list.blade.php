@@ -14,6 +14,7 @@
         <h3>{{ $product->name }} (Adet: {{ $product->qty }})</h3>
         <p>{{ $product->description }}</p>
         <p>Fiyat: {{ $product->price }}</p>
+        <a href="/urunler/sil/{{ $product->id }}">Sil</a>
     @endforeach
 </body>
 
