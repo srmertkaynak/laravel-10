@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Istanbul', // Sunucu zamanını türkiyeye göre ayarlama
 
     /*
     |--------------------------------------------------------------------------
