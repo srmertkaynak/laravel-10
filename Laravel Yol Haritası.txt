@@ -49,7 +49,6 @@ $table->string('brand');
 $table->string('model');
 $table->integer('userId');
 
-
 8- Örnek veri eklemek için Seeder kullanmak gerekiyor. Seeder kullanmak için:
 php artisan make:seeder PhoneSeeder
 
@@ -69,6 +68,8 @@ php artisan migrate:refresh
 
 9- Controller oluşturmak için:
 php artisan make:controller PhoneController
+
+10-
 
 
 ----------------
