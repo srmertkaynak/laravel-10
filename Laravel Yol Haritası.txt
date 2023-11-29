@@ -35,6 +35,36 @@ $table->dropColumn('priority');
 tüm bu işlemlerden sonra tabloya ilgili alanı göndermek için:
 php artisan migrate
 
+7- ORM'i kullanabilmek için, veritabanımızdaki kullanacağımız her bir tabloya karşılık gelecek bir Model sınıfı oluşturmamız gerekiyor. Model oluşturmak için:
+php artisan make:model Phone // Phone isimli bir model oluşturduk
+
+protected $fillable = ['serialNumber', 'brand', 'model', 'userId'];
+
+İlgili model için bir tablo açmam gerekiyor. Migration oluşturup içerisine yukarıdaki alanları yazdım:
+php artisan make:migration create_phones_table
+
+ardından oluşan migrations'a gidip alanları oluşturuyorum:
+$table->string('serialNumber');
+$table->string('brand');
+$table->string('model');
+$table->integer('userId');
+
+
+8- Örnek veri eklemek için Seeder kullanmak gerekiyor. Seeder kullanmak için:
+php artisan make:seeder PhoneSeeder
+
+Bununla beraber factory oluşturmak gerekiyor: Factory oluşturmak için:
+php artisan make:factory Phone
+
+Oluşturduğum factory'e faker ile örnek veri oluşturmak için ilgili alanı yazıyorum:
+'serialNumber' => rand(10000, 99999),
+'brand' => $this->faker->text(20),
+'model' => $this->faker->text(25),
+
+Örnek kayıtları tabloya kaydetmek için:
+php artisan db:seed --class=PhoneSeeder
+
+
 ----------------
 
 Örnek İpuçları:
