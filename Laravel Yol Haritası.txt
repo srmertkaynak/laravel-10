@@ -64,6 +64,12 @@ Oluşturduğum factory'e faker ile örnek veri oluşturmak için ilgili alanı y
 Örnek kayıtları tabloya kaydetmek için:
 php artisan db:seed --class=PhoneSeeder
 
+Eğer bir hata olduysa tabloları temizlemek için:
+php artisan migrate:refresh
+
+9- Controller oluşturmak için:
+php artisan make:controller PhoneController
+
 
 ----------------
 
